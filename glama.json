@@ -1,0 +1,58 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/1.0.0/server.json",
+  "name": "nishati-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Kenya energy access \u2014 KPLC connections, tariffs, off-grid solar options, rural electrification programs. 5 tools.",
+  "license": "MIT",
+  "author": {
+    "name": "Gabriel Mahia",
+    "email": "contact@aikungfu.dev"
+  },
+  "tools": [
+    {
+      "name": "kplc_connection_guide",
+      "description": "KPLC connection guide",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "tariff_calculator",
+      "description": "Estimate KPLC monthly bill",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "solar_options_guide",
+      "description": "Off-grid solar options",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "energy_subsidy_programs",
+      "description": "Kenya energy subsidy programs",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "energy_rights_query",
+      "description": "Consumer rights for electricity",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true
+      }
+    }
+  ]
+}
