@@ -2,7 +2,7 @@
 from __future__ import annotations
 from typing import Optional
 from fastmcp import FastMCP
-mcp = FastMCP(name="nishati-mcp", description="Kenya energy access navigation. DEMO data only.")
+mcp = FastMCP(name="nishati-mcp", instructions="Kenya energy access navigation. DEMO data only.")
 
 KPLC_TARIFFS = {
     "domestic_low": "KES 2.90/kWh (0–50 units/month). Lifeline tariff for low-income households.",
