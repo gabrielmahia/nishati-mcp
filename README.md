@@ -3,6 +3,14 @@
 [![nishati-mcp Glama score](https://glama.ai/mcp/servers/gabrielmahia/nishati-mcp/badges/score.svg)](https://glama.ai/mcp/servers/gabrielmahia/nishati-mcp)
 [![smithery badge](https://smithery.ai/badge/@gabrielmahia/nishati-mcp)](https://smithery.ai/server/@gabrielmahia/nishati-mcp)
 
+
+---
+**Compatible with `claude-sonnet-5`** (released 2026-06-30) — Anthropic's most agentic
+Sonnet yet. Runs multi-step tool chains end-to-end without stopping short.
+Install: `pip install nishati-mcp` · Use with any MCP client.
+
+---
+
 MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs. 5 tools.
 
 ## Part of the East Africa Coordination Stack
