@@ -76,3 +76,7 @@ def energy_rights_query(topic: str) -> dict:
     matched = {k: v for k, v in RIGHTS.items() if k in t or any(w in t for w in k.split("_"))}
     return {"source": "DEMO — Energy Act 2019, EPRA", "topic": topic,
             "rights": matched or RIGHTS, "epra": "epra.go.ke | 0703070707", "disclaimer": "Not legal advice."}
+
+def main() -> None:
+    """Console entry point."""
+    mcp.run()

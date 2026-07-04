@@ -1,4 +1,5 @@
 # nishati-mcp
+<!-- mcp-name: io.github.gabrielmahia/nishati-mcp -->
 
 [![nishati-mcp Glama score](https://glama.ai/mcp/servers/gabrielmahia/nishati-mcp/badges/score.svg)](https://glama.ai/mcp/servers/gabrielmahia/nishati-mcp)
 [![smithery badge](https://smithery.ai/badge/@gabrielmahia/nishati-mcp)](https://smithery.ai/server/@gabrielmahia/nishati-mcp)
