@@ -1,18 +1,59 @@
 # nishati-mcp
-<!-- mcp-name: io.github.gabrielmahia/nishati-mcp -->
 
-[![nishati-mcp Glama score](https://glama.ai/mcp/servers/gabrielmahia/nishati-mcp/badges/score.svg)](https://glama.ai/mcp/servers/gabrielmahia/nishati-mcp)
-[![smithery badge](https://smithery.ai/badge/@gabrielmahia/nishati-mcp)](https://smithery.ai/server/@gabrielmahia/nishati-mcp)
+## Why This Exists
 
+Getting connected to power in Kenya — or deciding between grid and off-grid solar — depends on tariff bands, connection procedures and subsidy programmes that are difficult to compare side by side. Energy access decisions are long-lived and expensive to reverse, so the comparison matters more than the brochure.
 
----
-**Compatible with `claude-sonnet-5`** (released 2026-06-30) — Anthropic's most agentic
-Sonnet yet. Runs multi-step tool chains end-to-end without stopping short.
-Install: `pip install nishati-mcp` · Use with any MCP client.
+## Install
 
----
+```bash
+pip install nishati-mcp
+```
 
-MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs. 5 tools.
+## Tools (5)
+
+- **`kplc_connection_guide`** —   
+  <sub>args: county, connection_type</sub>
+- **`tariff_calculator`** —   
+  <sub>args: monthly_units_kwh, customer_type</sub>
+- **`solar_options_guide`** —   
+  <sub>args: budget_kes, use_case</sub>
+- **`energy_subsidy_programs`** —   
+  <sub>args: county</sub>
+- **`energy_rights_query`** —   
+  <sub>args: topic</sub>
+
+## Example
+
+```python
+from nishati_mcp.server import tariff_calculator
+
+result = tariff_calculator(units_kwh=150)
+# band breakdown, levies, estimated bill
+```
+
+## Claude Desktop Integration
+
+Add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "nishati-mcp": {
+      "command": "python",
+      "args": ["-m", "nishati_mcp.server"]
+    }
+  }
+}
+```
+
+## Data & Disclaimers
+
+Tariffs are set by EPRA and revised periodically. Treat calculations as indicative and confirm current rates with KPLC or epra.go.ke before relying on them.
+
+Every tool response carries a `source` field. Responses labelled `DEMO` are
+illustrative reference data, not a live feed — verify against the authority
+named in the response before acting on it.
 
 ## Part of the East Africa Coordination Stack
 
