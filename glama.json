@@ -1,8 +1,8 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/1.0.0/server.json",
   "name": "nishati-mcp",
-  "version": "0.1.0",
-  "description": "MCP server for Kenya energy access \u2014 KPLC connections, tariffs, off-grid solar options, rural electrification programs. 5 tools.",
+  "version": "0.1.3",
+  "description": "MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs",
   "license": "MIT",
   "author": {
     "name": "Gabriel Mahia",
@@ -11,7 +11,7 @@
   "tools": [
     {
       "name": "kplc_connection_guide",
-      "description": "KPLC connection guide",
+      "description": "Guide to new KPLC electricity connection in Kenya. DEMO.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -20,7 +20,7 @@
     },
     {
       "name": "tariff_calculator",
-      "description": "Estimate KPLC monthly bill",
+      "description": "Estimate monthly KPLC electricity cost for Kenya household. DEMO.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -29,7 +29,7 @@
     },
     {
       "name": "solar_options_guide",
-      "description": "Off-grid solar options",
+      "description": "Off-grid solar options for Kenya households. DEMO.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -38,7 +38,7 @@
     },
     {
       "name": "energy_subsidy_programs",
-      "description": "Kenya energy subsidy programs",
+      "description": "Kenya energy subsidy and access programs. DEMO.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -47,7 +47,7 @@
     },
     {
       "name": "energy_rights_query",
-      "description": "Consumer rights for electricity",
+      "description": "Consumer rights for electricity in Kenya. DEMO.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -68,5 +68,8 @@
     "mcp",
     "useful-rails",
     "ai-agents"
+  ],
+  "maintainers": [
+    "gabrielmahia"
   ]
 }
