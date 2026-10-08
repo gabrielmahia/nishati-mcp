@@ -1,7 +1,13 @@
 """NishatiMCP — Kenya Energy Access Tools (5 tools). All data DEMO."""
 from __future__ import annotations
+
 from typing import Optional
+
 from fastmcp import FastMCP
+
+# Annotations tell clients which tools are safe to auto-approve (read-only, no side effects).
+READ_ONLY = {"readOnlyHint": True, "idempotentHint": True, "openWorldHint": False}
+
 mcp = FastMCP(name="nishati-mcp", instructions="Kenya energy access navigation. DEMO data only.")
 
 KPLC_TARIFFS = {
@@ -12,8 +18,8 @@ KPLC_TARIFFS = {
     "large_commercial": "Time-of-use tariff. KES 14–20/kWh off-peak/peak.",
 }
 
-@mcp.tool(name="kplc_connection_guide", description="Guide to new KPLC electricity connection in Kenya. DEMO.")
-def kplc_connection_guide(county: Optional[str] = None, connection_type: Optional[str] = "residential") -> dict:
+@mcp.tool(name="kplc_connection_guide", description="Guide to new KPLC electricity connection in Kenya. DEMO.", annotations=READ_ONLY)
+def kplc_connection_guide(county: str | None = None, connection_type: str | None = "residential") -> dict:
     return {"source": "DEMO — kplc.co.ke for official process", "county": county, "type": connection_type,
             "steps": ["1. Application: kplc.co.ke or any KPLC office. Documents: ID, plot number, KRA PIN.",
                       "2. Site survey by KPLC engineer (1–2 weeks)",
@@ -24,8 +30,8 @@ def kplc_connection_guide(county: Optional[str] = None, connection_type: Optiona
             "rural_subsidy": "KETRACO/REREC rural electrification may subsidise connection in off-grid areas.",
             "kplc_contacts": "kplc.co.ke | 0703070707"}
 
-@mcp.tool(name="tariff_calculator", description="Estimate monthly KPLC electricity cost for Kenya household. DEMO.")
-def tariff_calculator(monthly_units_kwh: float, customer_type: Optional[str] = "residential") -> dict:
+@mcp.tool(name="tariff_calculator", description="Estimate monthly KPLC electricity cost for Kenya household. DEMO.", annotations=READ_ONLY)
+def tariff_calculator(monthly_units_kwh: float, customer_type: str | None = "residential") -> dict:
     if monthly_units_kwh <= 50: rate = 2.90; category = "domestic_low"
     elif monthly_units_kwh <= 100: rate = 15.80; category = "domestic_mid"
     else: rate = 21.32; category = "domestic_high"
@@ -38,8 +44,8 @@ def tariff_calculator(monthly_units_kwh: float, customer_type: Optional[str] = "
             "fuel_levy_estimate": round(fuel_levy, 2), "fixed_charges": fixed,
             "estimated_total_kes": total, "note": "Add VAT 16% to total. Rates change quarterly."}
 
-@mcp.tool(name="solar_options_guide", description="Off-grid solar options for Kenya households. DEMO.")
-def solar_options_guide(budget_kes: Optional[float] = None, use_case: Optional[str] = "basic_lighting") -> dict:
+@mcp.tool(name="solar_options_guide", description="Off-grid solar options for Kenya households. DEMO.", annotations=READ_ONLY)
+def solar_options_guide(budget_kes: float | None = None, use_case: str | None = "basic_lighting") -> dict:
     OPTIONS = [
         {"tier": "Solar lantern", "cost": "KES 1,500–4,000", "capacity": "3–6W", "covers": "Lighting + phone charging", "providers": ["M-KOPA","SunKing","d.light"]},
         {"tier": "Solar home system (SHS) basic", "cost": "KES 8,000–25,000", "capacity": "20–40W", "covers": "4 lights + TV + charging", "providers": ["M-KOPA","BBOXX","SunKing"]},
@@ -52,8 +58,8 @@ def solar_options_guide(budget_kes: Optional[float] = None, use_case: Optional[s
             "pay_as_you_go": "M-KOPA and BBOXX offer PAYG via M-PESA. No upfront cost option.",
             "rerec": "Rural Electrification and Renewable Energy Corporation: rerec.go.ke"}
 
-@mcp.tool(name="energy_subsidy_programs", description="Kenya energy subsidy and access programs. DEMO.")
-def energy_subsidy_programs(county: Optional[str] = None) -> dict:
+@mcp.tool(name="energy_subsidy_programs", description="Kenya energy subsidy and access programs. DEMO.", annotations=READ_ONLY)
+def energy_subsidy_programs(county: str | None = None) -> dict:
     return {"source": "DEMO — verify at epra.go.ke, rerec.go.ke", "county": county,
             "programs": [
                 {"name": "Last Mile Connectivity", "provider": "KPLC/Kenya Power", "benefit": "Subsidised connection for rural households"},
@@ -63,7 +69,7 @@ def energy_subsidy_programs(county: Optional[str] = None) -> dict:
                 {"name": "Stima Loan", "provider": "KCB/KPLC", "benefit": "Loan for wiring + connection fee"},
             ]}
 
-@mcp.tool(name="energy_rights_query", description="Consumer rights for electricity in Kenya. DEMO.")
+@mcp.tool(name="energy_rights_query", description="Consumer rights for electricity in Kenya. DEMO.", annotations=READ_ONLY)
 def energy_rights_query(topic: str) -> dict:
     RIGHTS = {
         "disconnection": "KPLC must give 7 days notice before disconnection. No disconnection on weekends/public holidays.",
