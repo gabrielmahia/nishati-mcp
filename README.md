@@ -1,4 +1,5 @@
 # nishati-mcp
+<!-- mcp-name: io.github.gabrielmahia/nishati-mcp -->
 
 ## Why This Exists
 
