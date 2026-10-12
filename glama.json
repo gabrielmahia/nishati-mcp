@@ -11,7 +11,7 @@
   "tools": [
     {
       "name": "kplc_connection_guide",
-      "description": "Guide to new KPLC electricity connection in Kenya. DEMO.",
+      "description": "Step-by-step guide to getting a new electricity connection from Kenya Power (KPLC): application documents, site survey, quotation, payment, installation and meter. Use when someone asks how to get connected or what it costs. The steps are the same for every county and connection type: both arguments are only echoed back. Returns the source label, county, type, the numbered steps, a note on rural electrification subsidies and KPLC contact details. A static summary labelled DEMO with indicative costs: confirm the process and fees at kplc.co.ke. Read-only; no side effects.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -20,7 +20,7 @@
     },
     {
       "name": "tariff_calculator",
-      "description": "Estimate monthly KPLC electricity cost for Kenya household. DEMO.",
+      "description": "Estimate a monthly Kenya Power electricity bill in KES from units consumed. Use when someone asks roughly what a given number of kWh will cost. Applies a simple domestic tariff band by units (up to 50, up to 100, above), adds a fuel levy estimate, a forex estimate and a fixed charge. customer_type is accepted but ignored: only the units decide the band. Returns the category, energy charge, fuel levy estimate, fixed charges, estimated total and a reminder to add 16% VAT. Constants are illustrative and not checked against the current KPLC or EPRA tariff: labelled DEMO, confirm at kplc.co.ke. Read-only; no side effects.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -29,7 +29,7 @@
     },
     {
       "name": "solar_options_guide",
-      "description": "Off-grid solar options for Kenya households. DEMO.",
+      "description": "Compare solar options in Kenya from a lantern to a productive-use system, with indicative cost ranges, capacity, what each covers and example providers. Use when someone asks what solar they can get for a budget or purpose. With budget_kes, tiers whose lowest listed price is above the budget are removed; use_case is only echoed back. Returns the matching options, a note on pay-as-you-go via M-PESA and the REREC site. Indicative 2025 prices labelled DEMO: confirm with providers. Read-only; no side effects.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -38,7 +38,7 @@
     },
     {
       "name": "energy_subsidy_programs",
-      "description": "Kenya energy subsidy and access programs. DEMO.",
+      "description": "List Kenyan energy access programmes: last-mile connectivity, REREC rural electrification, KOSAP subsidised solar, the lifeline tariff and Stima Loan. Use when someone asks what support exists to get electricity or solar. Takes an optional county that is only echoed back: the same list is returned for every county. Returns the source label, the county and the programmes with provider and benefit. A static list labelled DEMO: verify eligibility at epra.go.ke and rerec.go.ke. Read-only; no side effects.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -47,7 +47,7 @@
     },
     {
       "name": "energy_rights_query",
-      "description": "Consumer rights for electricity in Kenya. DEMO.",
+      "description": "Explain consumer rights on electricity in Kenya: disconnection notice, billing disputes, damage from surges, connection delays and rural access under the Energy Act 2019. Use when someone asks whether the utility acted correctly or where to complain. Keywords in topic select entries; if none match, ALL rights are returned. Returns the source label, the topic, the rights, EPRA's contact details and a not-legal-advice disclaimer. Static summary labelled DEMO: verify with EPRA. Read-only; no side effects.",
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
