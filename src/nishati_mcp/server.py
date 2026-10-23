@@ -1,6 +1,8 @@
 """NishatiMCP — Kenya Energy Access Tools (5 tools). All data DEMO."""
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as _pkg_version
 from typing import Annotated, Optional
 
 from fastmcp import FastMCP
@@ -9,7 +11,13 @@ from pydantic import Field
 # Annotations tell clients which tools are safe to auto-approve (read-only, no side effects).
 READ_ONLY = {"readOnlyHint": True, "idempotentHint": True, "openWorldHint": False}
 
-mcp = FastMCP(name="nishati-mcp", instructions="Kenya energy access navigation. DEMO data only.")
+try:
+    _VERSION = _pkg_version("nishati-mcp")
+except PackageNotFoundError:  # a source tree that was never installed
+    _VERSION = "0+unknown"
+
+
+mcp = FastMCP(name="nishati-mcp", instructions="Kenya energy access navigation. DEMO data only.", version=_VERSION)
 
 KPLC_TARIFFS = {
     "domestic_low": "KES 2.90/kWh (0–50 units/month). Lifeline tariff for low-income households.",

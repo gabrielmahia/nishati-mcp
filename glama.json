@@ -1,7 +1,7 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/1.0.0/server.json",
   "name": "nishati-mcp",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs",
   "license": "MIT",
   "author": {
