@@ -3,7 +3,7 @@
 <!-- coverage-adaptive-reasoning:v2 -->
 
 ## What this is
-MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs. 5 tools.
+MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs. 6 tools.
 
 ## Read first
 - README.md

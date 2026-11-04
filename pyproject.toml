@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nishati-mcp"
-version = "0.1.10"
-description = "MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs. 5 tools."
+version = "0.1.11"
+description = "MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs, live solar-yield estimates. 6 tools."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"

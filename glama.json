@@ -1,7 +1,7 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/1.0.0/server.json",
   "name": "nishati-mcp",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs",
   "license": "MIT",
   "author": {
@@ -52,6 +52,16 @@
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true
+      }
+    },
+    {
+      "name": "solar_yield_estimate",
+      "description": "Estimate how much electricity a fixed solar panel system would produce at a location, using live data from the European Commission's PVGIS service (satellite-based solar radiation). Use when someone is sizing a rooftop or off-grid solar system, comparing places, or checking whether solar can cover a monthly consumption. Returns annual and monthly kWh for the system size, the inputs used, the source with its attribution, and the retrieval time; on a network or service failure it returns an error instead of a number. Read-only; contacts an external service.",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
       }
     }
   ],

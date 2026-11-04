@@ -1,6 +1,11 @@
-"""NishatiMCP — Kenya Energy Access Tools (5 tools). All data DEMO."""
+"""NishatiMCP — Kenya Energy Access Tools (6 tools). Five use DEMO data; solar_yield_estimate queries live EU JRC PVGIS data."""
 from __future__ import annotations
 
+import json
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import UTC, datetime
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as _pkg_version
 from typing import Annotated, Optional
@@ -10,6 +15,12 @@ from pydantic import Field
 
 # Annotations tell clients which tools are safe to auto-approve (read-only, no side effects).
 READ_ONLY = {"readOnlyHint": True, "idempotentHint": True, "openWorldHint": False}
+# A live lookup still changes nothing anywhere, but it does contact an outside service, and clients should know that.
+LIVE_READ_ONLY = {"readOnlyHint": True, "idempotentHint": True, "openWorldHint": True}
+LIVE_TOOLS = {"solar_yield_estimate"}
+
+PVGIS_URL = "https://re.jrc.ec.europa.eu/api/v5_3/PVcalc"
+PVGIS_ATTRIBUTION = "PVGIS © European Union, 2001-2026 (European Commission Joint Research Centre); reuse is authorised provided the source is acknowledged."
 
 try:
     _VERSION = _pkg_version("nishati-mcp")
@@ -17,7 +28,7 @@ except PackageNotFoundError:  # a source tree that was never installed
     _VERSION = "0+unknown"
 
 
-mcp = FastMCP(name="nishati-mcp", instructions="Kenya energy access navigation. DEMO data only.", version=_VERSION)
+mcp = FastMCP(name="nishati-mcp", instructions="Kenya energy access navigation. Five tools use DEMO data; solar_yield_estimate returns live solar-yield estimates from EU JRC PVGIS.", version=_VERSION)
 
 KPLC_TARIFFS = {
     "domestic_low": "KES 2.90/kWh (0–50 units/month). Lifeline tariff for low-income households.",
@@ -91,6 +102,35 @@ def energy_rights_query(topic: Annotated[str, Field(description="Rights topic su
     matched = {k: v for k, v in RIGHTS.items() if k in t or any(w in t for w in k.split("_"))}
     return {"source": "DEMO — Energy Act 2019, EPRA", "topic": topic,
             "rights": matched or RIGHTS, "epra": "epra.go.ke | 0703070707", "disclaimer": "Not legal advice."}
+
+def _fetch_pvgis(params: dict, timeout: float = 20.0) -> dict:
+    url = PVGIS_URL + "?" + urllib.parse.urlencode(params)
+    req = urllib.request.Request(url, headers={"User-Agent": "nishati-mcp (https://github.com/gabrielmahia/nishati-mcp)", "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:  # fixed https endpoint
+        return json.loads(r.read().decode("utf-8"))
+
+
+@mcp.tool(name="solar_yield_estimate", description="Estimate how much electricity a fixed solar panel system would produce at a location, using live data from the European Commission's PVGIS service (satellite-based solar radiation). Use when someone is sizing a rooftop or off-grid solar system, comparing places, or checking whether solar can cover a monthly consumption. Returns annual and monthly kWh for the system size, the inputs used, the source with its attribution, and the retrieval time; on a network or service failure it returns an error instead of a number. Read-only; contacts an external service.", annotations=LIVE_READ_ONLY)
+def solar_yield_estimate(latitude: Annotated[float, Field(description="Latitude in decimal degrees, for example -1.29 for Nairobi. Must be between -60 and 65 (PVGIS coverage).")],
+                         longitude: Annotated[float, Field(description="Longitude in decimal degrees, for example 36.82 for Nairobi. Must be between -180 and 180.")],
+                         system_kwp: Annotated[float, Field(description="Installed panel capacity in kilowatt-peak, for example 1.0 for about three 330 W panels. Between 0.01 and 1000.")] = 1.0,
+                         system_losses_pct: Annotated[float, Field(description="Expected system losses in percent (cables, inverter, dust, temperature). PVGIS suggests 14. Between 0 and 50.")] = 14.0) -> dict:
+    retrieved = datetime.now(UTC).isoformat(timespec="seconds")
+    source = {"source": "LIVE — EU Joint Research Centre PVGIS v5.3 (re.jrc.ec.europa.eu)", "attribution": PVGIS_ATTRIBUTION, "retrieved_at": retrieved}
+    if not (-60 <= latitude <= 65 and -180 <= longitude <= 180):
+        return {"error": "latitude must be between -60 and 65 and longitude between -180 and 180 (PVGIS coverage)", **source}
+    if not (0.01 <= system_kwp <= 1000 and 0 <= system_losses_pct <= 50):
+        return {"error": "system_kwp must be between 0.01 and 1000 and system_losses_pct between 0 and 50", **source}
+    try:
+        d = _fetch_pvgis({"lat": latitude, "lon": longitude, "peakpower": system_kwp, "loss": system_losses_pct, "outputformat": "json"})
+        fixed = d["outputs"]["totals"]["fixed"]
+        monthly = [{"month": m["month"], "kwh": round(m["E_m"], 1)} for m in d["outputs"]["monthly"]["fixed"]]
+    except (urllib.error.URLError, TimeoutError, ValueError, KeyError, TypeError) as e:
+        return {"error": f"PVGIS did not return a usable answer ({type(e).__name__}); no estimate is made without it. Try again later.", **source}
+    return {"annual_kwh": round(fixed["E_y"], 1), "average_daily_kwh": round(fixed["E_d"], 2), "monthly": monthly,
+            "inputs": {"latitude": latitude, "longitude": longitude, "system_kwp": system_kwp, "system_losses_pct": system_losses_pct, "mounting": "fixed, optimal tilt chosen by PVGIS"},
+            "note": "A modelled estimate from long-term satellite radiation data, not a guarantee; shading, panel quality and maintenance change real output.", **source}
+
 
 def main() -> None:
     """Console entry point."""
