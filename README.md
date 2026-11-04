@@ -11,7 +11,7 @@ Getting connected to power in Kenya — or deciding between grid and off-grid so
 pip install nishati-mcp
 ```
 
-## Tools (5)
+## Tools (6)
 
 - **`kplc_connection_guide`** —   
   <sub>args: county, connection_type</sub>
@@ -23,6 +23,10 @@ pip install nishati-mcp
   <sub>args: county</sub>
 - **`energy_rights_query`** —   
   <sub>args: topic</sub>
+
+### Live data: `solar_yield_estimate`
+
+Annual and monthly output of a fixed solar system at any location, from the European Commission's [PVGIS](https://re.jrc.ec.europa.eu/pvg_tools/en/) service (free, no key). Each answer names its source and retrieval time; if PVGIS does not answer, the tool returns an error instead of a number. PVGIS © European Union, 2001-2026; reuse is authorised provided the source is acknowledged. The other five tools still use DEMO data.
 
 ## Example
 
