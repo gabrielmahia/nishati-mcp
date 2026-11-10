@@ -3,7 +3,7 @@ message: "If you use this software, please cite it as below."
 type: software
 title: "nishati-mcp"
 abstract: "MCP server for Kenya energy access — KPLC connections, tariffs, off-grid solar options, rural electrification programs, live solar-yield estimates. 6 tools."
-version: "0.1.12"
+version: "0.1.13"
 authors:
   - family-names: "Mahia"
     given-names: "Gabriel"
